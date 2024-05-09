@@ -18,11 +18,10 @@ Olá, o que podemos fazer por você?
     return input(textwrap.dedent(menu))
 
 def verificar(contas):
-    conta = input("Qual o número da conta para depósito?: ")
+    conta = input("Qual o número da conta?: ")
     chaves = contas.keys();
     if (conta in chaves):
         val1 = 1
-        print(contas[conta].keys())
         saldo = contas[conta]["saldo"] 
         extrato = contas[conta]["extrato"]
         senha = contas[conta]["senha"]
@@ -47,8 +46,8 @@ def depositar(extrato, saldo):
         print("Valor inválido para o depósito. Por favor, escolha um valor válido.")
     return (extrato, saldo)
 
-def senha(senha):
-    tentativa = float(input("Qual a senha da conta?: "))
+def senhar(senha):
+    tentativa = input("Qual a senha da conta?: ")
     if(tentativa == senha):
         val2 = 1
     else:
@@ -115,13 +114,8 @@ def conta(contas):
 
     return contas
         
-def atualizar_deposito(contas, conta, extrato, saldo):
-    contas.update({conta:{"saldo":saldo,"extrato":extrato}})
-
-    return contas
-
-def atualizar_saque(contas, conta, saldo, n_diario, n_saque, extrato):
-    contas.update({conta:{"extrato":extrato, "n_saque":n_saque, "n_diario":n_diario, "saldo":saldo}})
+def atualizar(contas, conta, extrato, saldo, n_diario, n_saque, senha):
+    contas.update({conta:{"extrato":extrato, "n_saque":n_saque, "n_diario":n_diario, "saldo":saldo, "senha":senha}})
 
     return contas
 
@@ -139,17 +133,17 @@ while True:
         (conta, val1, extrato, saldo, senha, n_diario, n_saque) = verificar(contas)
         if(val1 == 1):
             (extrato, saldo) = depositar(extrato, saldo)
-            contas = atualizar_deposito(contas, conta, extrato, saldo)
+            contas = atualizar(contas, conta, extrato, saldo, n_diario, n_saque, senha)
         else:
             print("Conta digitada é inválida. Por favor, tente novamente.")
 
     elif opcao == '2':
         (conta, val1, extrato, saldo, senha, n_diario, n_saque) = verificar(contas)
         if(val1 == 1):
-            val2 = senha(senha)
+            val2 = senhar(senha)
             if(val2 == 1):
-                 (saldo, n_diario, n_saque, extrato) = sacar(saldo, n_diario, n_saque,extrato)
-                 contas = atualizar_saque(contas, conta, saldo, n_diario, n_saque, extrato)
+                 (saldo, n_diario, n_saque, extrato) = sacar(saldo, n_diario, n_saque, extrato)
+                 contas = atualizar(contas, conta, extrato, saldo, n_diario, n_saque, senha)
             else:
                 print("A senha digitada está inválida. Por favor, tente novamente.")
         else:
@@ -157,7 +151,7 @@ while True:
     elif opcao == '3':
         (conta, val1, extrato, saldo, senha, n_diario, n_saque) = verificar(contas)
         if(val1 == 1):
-            val2 = senha(senha)
+            val2 = senhar(senha)
             if(val2 == 1):
                 exibir(extrato, saldo)
             else:
