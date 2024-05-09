@@ -104,7 +104,7 @@ def cpf(cpf1, usuarios):
     return val3
 
 
-def conta(contas):
+def contar(contas):
     lista_contas = contas.keys()
     quant_contas = len(lista_contas)
     numero_nova = str(quant_contas+1).zfill(5)
@@ -164,7 +164,7 @@ while True:
         cpf1 = input("Por favor, informe o seu cpf: ")
         val3 = cpf(cpf1, usuarios)
         if(val3 == 1):
-            contas = conta(contas)
+            contas = contar(contas)
         else:
             print("Usuário não cadastrado")
     elif opcao == '6':
